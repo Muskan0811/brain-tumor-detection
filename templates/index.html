@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Brain Tumor MRI Detection</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #e9f3ff, #f7fbff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Futuristic glowing blobs */
+        .blob1, .blob2 {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.7;
+            z-index: -1;
+        }
+        .blob1 {
+            width: 450px; height: 450px;
+            background: #72b3ff;
+            top: -150px; left: -100px;
+        }
+        .blob2 {
+            width: 380px; height: 380px;
+            background: #b6d7ff;
+            bottom: -150px; right: -80px;
+        }
+
+        /* Card */
+        .card {
+            width: 520px;
+            padding: 40px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 60px rgba(0, 80, 160, 0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        /* AI + Medical Header */
+        .header-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #003b7a;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #5578a1;
+            margin-top: 4px;
+        }
+
+        /* AI pulse animation line */
+        .ekg-line {
+            width: 100%;
+            height: 55px;
+            margin: 15px 0;
+            background: url('https://i.imgur.com/6Y7w2Qy.png') center/contain no-repeat;
+            opacity: 0.8;
+            animation: pulse 2.2s infinite linear;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.55; }
+            to { opacity: 1; }
+        }
+
+        /* Upload box */
+        .upload-box {
+            border: 2px dashed #8bbcff;
+            border-radius: 18px;
+            padding: 20px;
+            background: #f1f7ff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .upload-box:hover {
+            background: #e5f1ff;
+            border-color: #4e9eff;
+            transform: scale(1.02);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Button */
+        .btn {
+            width: 100%;
+            padding: 13px 0;
+            font-size: 17px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #007aff, #62a9ff);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,110,255,0.25);
+            transition: 0.25s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* MRI Frame */
+        .preview {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .preview img {
+            width: 300px;
+            border-radius: 18px;
+            border: 4px solid #d1e4ff;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.18);
+            animation: glow 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 18px rgba(0,130,255,0.2); }
+            to { box-shadow: 0 0 28px rgba(0,130,255,0.6); }
+        }
+
+        /* Result box */
+        .result-box {
+            margin-top: 25px;
+            padding: 18px;
+            background: #f1f6ff;
+            border-radius: 16px;
+            border-left: 6px solid #4b92f7;
+            display: none;
+        }
+
+        .result-label {
+            color: #0a3f80;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .confidence-label {
+            margin-top: 5px;
+            font-size: 15px;
+            color: #1b579e;
+        }
+    </style>
+
+    <script>
+        function showPreview(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Show Image
+            const img = document.getElementById("preview-img");
+            img.src = URL.createObjectURL(file);
+            document.querySelector(".preview").style.display = "block";
+
+            // Show result placeholder
+            document.querySelector(".result-box").style.display = "block";
+            document.getElementById("result-text").innerHTML = "Awaiting AI diagnosis…";
+            document.getElementById("confidence").innerHTML = "--";
+        }
+    </script>
+
+</head>
+<body>
+
+    <div class="blob1"></div>
+    <div class="blob2"></div>
+
+    <div class="card">
+        <div class="header-title">AI Brain Tumor MRI Detection</div>
+        <div class="subtitle">Medical Vision Model • Neural Imaging Suite</div>
+
+        <div class="ekg-line"></div>
+
+        <label for="image" class="upload-box">
+            <b style="color:#0057c2;">Click to Upload MRI Image</b>
+        </label>
+        <input id="image" type="file" onchange="showPreview(event)">
+
+        <button class="btn">Run AI Analysis</button>
+
+        <div class="preview">
+            <img id="preview-img">
+        </div>
+
+        <div class="result-box">
+            <div class="result-label" id="result-text"></div>
+            <div class="confidence-label">Confidence: <span id="confidence"></span>%</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
