@@ -1,4 +1,11 @@
 venv/
+oldtf/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+uploads/
+venv/
 __pycache__/
 *.pyc
 .env
